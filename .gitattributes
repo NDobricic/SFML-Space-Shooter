@@ -1,0 +1,4 @@
+#Linguist
+vendor/** linguist-vendored=true
+deps/** linguist-vendored=true
+*.frag linguist-language=GLSL
