@@ -1,9 +1,8 @@
-#include <iostream>
+#include "GameWindow.h"
 
 int main()
 {
-	std::cout << "Everything is working correctly!" << std::endl;
-	std::cin.get();
+    ss::GameWindow window(200, 200);
 
-	return 0;
+    return 0;
 }
