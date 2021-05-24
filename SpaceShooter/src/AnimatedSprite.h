@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <string>
 
 namespace ss
 {
@@ -12,33 +11,24 @@ namespace ss
 		Reverse
 	};
 
-	class AnimatedSprite
+	class AnimatedSprite : public sf::Sprite
 	{
 	private:
-		sf::Texture sheet;
-
 		int w, h;
 		int offX, offY;
 
 		int numFrames;
-		float time;
-		float duration;
-		float speed;
+		float time = 0.0;
+		float speed = 1.0;
 
-		sf::Sprite sprite;
-		AnimationLoopMode loopMode;
+		AnimationLoopMode loopMode = AnimationLoopMode::Loop;
 
 	public:
-		AnimatedSprite(const std::string& spriteSheetPath, int width, int height, int numFrames, float duration, int offsetX = 0, int offsetY = 0);
-		AnimatedSprite(sf::Texture spriteSheetTexture, int width, int height, int numFrames, float duration, int offsetX = 0, int offsetY = 0);
-
-		void Initialize(const std::string& spriteSheetPath, int width, int height, int numFrames, float duration, int offsetX = 0, int offsetY = 0);
-		void Initialize(sf::Texture spriteSheetTexture, int width, int height, int numFrames, float duration, int offsetX = 0, int offsetY = 0);
+		AnimatedSprite(const std::string& spriteSheetPath, int width, int height, int numFrames, int offsetX = 0, int offsetY = 0);
+		AnimatedSprite(sf::Texture spriteSheetTexture, int width, int height, int numFrames, int offsetX = 0, int offsetY = 0);
 
 		void SetSpeed(float speed);
 		void SetLoopMode(const AnimationLoopMode& mode);
 		void Update(float deltaTime);
-
-		const sf::Sprite& GetSprite();
 	};
 }

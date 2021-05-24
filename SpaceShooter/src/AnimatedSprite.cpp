@@ -2,47 +2,24 @@
 
 namespace ss
 {
-	AnimatedSprite::AnimatedSprite(const std::string& spriteSheetPath, int width, int height, int numFrames, float duration, int offsetX, int offsetY)
+	AnimatedSprite::AnimatedSprite(const std::string& spriteSheetPath, int width, int height, int numFrames, int offsetX, int offsetY)
+		: w(width), h(height), numFrames(numFrames), offX(offsetX), offY(offsetY)
 	{
-		Initialize(spriteSheetPath, width, height, numFrames, duration, offsetX, offsetY);
+		sf::Texture* tex = new sf::Texture;
+		tex->loadFromFile(spriteSheetPath);
+
+		setTexture(*tex);
 	}
 
-	AnimatedSprite::AnimatedSprite(sf::Texture spriteSheetTexture, int width, int height, int numFrames, float duration, int offsetX, int offsetY)
+	AnimatedSprite::AnimatedSprite(sf::Texture spriteSheetTexture, int width, int height, int numFrames, int offsetX, int offsetY)
+		: w(width), h(height), numFrames(numFrames), offX(offsetX), offY(offsetY)
 	{
-		Initialize(spriteSheetTexture, width, height, numFrames, duration, offsetX, offsetY);
+		setTexture(spriteSheetTexture);
 	}
 
-	void AnimatedSprite::Initialize(const std::string& spriteSheetPath, int width, int height, int numFrames, float duration, int offsetX, int offsetY)
+	void AnimatedSprite::SetSpeed(float value)
 	{
-		sf::Texture tex;
-		tex.loadFromFile(spriteSheetPath);
-
-		Initialize(tex, width, height, numFrames, duration, offsetX, offsetY);
-	}
-
-	void AnimatedSprite::Initialize(sf::Texture spriteSheetTexture, int width, int height, int numFrames, float duration, int offsetX, int offsetY)
-	{
-		sheet = spriteSheetTexture;
-		sprite.setTexture(sheet);
-
-		w = width;
-		h = height;
-
-		offX = offsetX;
-		offY = offsetY;
-
-		this->numFrames = numFrames;
-		this->duration = duration;
-
-		time = 0.0f;
-		speed = 1.0f;
-
-		loopMode = AnimationLoopMode::Loop;
-	}
-
-	void AnimatedSprite::SetSpeed(float speed)
-	{
-		this->speed = speed;
+		this->speed = value;
 	}
 
 	void AnimatedSprite::SetLoopMode(const AnimationLoopMode& mode)
@@ -54,20 +31,20 @@ namespace ss
 	{
 		time = time + deltaTime * speed;
 
-		if (time >= duration || time < 0)
+		if (time >= numFrames || time < 0)
 		{
 			switch (loopMode)
 			{
 			case ss::AnimationLoopMode::Loop:
-				time = fmod(time + deltaTime * speed, duration);
+				time = fmod(time, numFrames);
 				break;
 			case ss::AnimationLoopMode::NoLoop:
-				time = duration * 0.999f;
+				time = numFrames * 0.999f;
 				break;
 			case ss::AnimationLoopMode::Reverse:
 				speed = -speed;
-				if (time >= duration)
-					time = duration - (time - duration);
+				if (time >= numFrames)
+					time = numFrames - (time - numFrames);
 				else
 					time = -time;
 				break;
@@ -75,16 +52,12 @@ namespace ss
 				break;
 			}
 		}
-	}
 
-	const sf::Sprite& AnimatedSprite::GetSprite()
-	{
-		int currentFrame = time / duration * numFrames;
+		int currentFrame = (int)time;
 
 		int left = offX + w * currentFrame;
 		int top = offY;
 
-		sprite.setTextureRect(sf::IntRect(left, top, w, h));
-		return sprite;
+		setTextureRect(sf::IntRect(left, top, w, h));
 	}
 }
