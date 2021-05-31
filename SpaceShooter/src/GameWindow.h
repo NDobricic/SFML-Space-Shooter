@@ -9,12 +9,15 @@ namespace ss
 	class GameWindow
 	{
 	private:
-		sf::RenderWindow window;
-
+		static sf::RenderWindow* window;
+		static std::string title;
 
 		void RunGameLoop();
+
 	public:
 		GameWindow(int width, int height, const std::string& title = "New SFML Window");
+		static int Width();
+		static int Height();
 		
 	protected:
 		void Start() { }
