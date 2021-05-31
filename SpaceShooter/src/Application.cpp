@@ -2,7 +2,7 @@
 
 int main()
 {
-    ss::GameWindow window(200, 200);
+    ss::GameWindow window(1200, 900);
 
     return 0;
 }
