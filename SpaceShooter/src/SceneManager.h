@@ -29,6 +29,7 @@ namespace ss
 			}
 
 			newScene->Load();
+			newScene->Start();
 			currentScene = newScene;
 		}
 	};
