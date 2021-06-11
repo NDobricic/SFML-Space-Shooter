@@ -1,7 +1,6 @@
 #include "GameWindow.h"
-#include "AnimatedSprite.h"
-#include "SceneManager.h"
-#include "GameScene.h"
+#include "Scenes/SceneManager.h"
+#include "Scenes/GameScene.h"
 
 namespace ss
 {

@@ -1,30 +1,27 @@
-#include "PlayerBullet.h"
-#include "GameWindow.h"
-#include "SceneManager.h"
+#include "Bullet.h"
+#include "../GameWindow.h"
+#include "../Scenes/SceneManager.h"
 
-#define PI 3.14159265
+#define PI 3.14159265f
 
 namespace ss
 {
-	PlayerBullet::PlayerBullet(const sf::Vector2f& position, float rotation, float travelSpeed)
+	Bullet::Bullet(const sf::Vector2f& position, float rotation, float travelSpeed)
 	{
 		pos = position;
 		speed = travelSpeed;
 		rot = rotation;
 
-		cosr = cos(rot * 2 * PI / 360.0f);
-		sinr = sin(rot * 2 * PI / 360.0f);
+		cosr = cos(rot * 2.0f * PI / 360.0f);
+		sinr = sin(rot * 2.0f * PI / 360.0f);
+	}
 
-		sprite = new sf::Sprite();
-
-		sf::Texture* tex = new sf::Texture;
-		tex->loadFromFile("res/sprites/bullet_blue.png");
-		sprite->setTexture(*tex);
-
+	void Bullet::Start()
+	{
 		SetPosition(pos);
 	}
 
-	void PlayerBullet::Update(float deltaTime)
+	void Bullet::Update(float deltaTime)
 	{
 		sf::Vector2f currentPos = Position();
 

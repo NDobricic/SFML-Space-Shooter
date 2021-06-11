@@ -4,7 +4,7 @@
 
 namespace ss
 {
-	class PlayerBullet : public Collidable
+	class Bullet : public Collidable
 	{
 	private:
 		sf::Vector2f pos;
@@ -13,7 +13,8 @@ namespace ss
 		float cosr, sinr;
 
 	public:
-		PlayerBullet(const sf::Vector2f& position, float rotation, float travelSpeed);
+		Bullet(const sf::Vector2f& position, float rotation, float travelSpeed);
+		void Start() override;
 		void Update(float deltaTime) override;
 	};
 }

@@ -8,6 +8,6 @@ namespace ss
 	class Collidable : public Entity
 	{
 	public:
-		virtual void OnCollision(const Collidable& other) { }
+		virtual void OnCollision(Collidable& other) { }
 	};
 }

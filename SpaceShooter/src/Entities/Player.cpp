@@ -1,8 +1,9 @@
 #include "Player.h"
 #include <algorithm>
-#include "GameWindow.h"
-#include "SceneManager.h"
+#include "../GameWindow.h"
+#include "../Scenes/SceneManager.h"
 #include "PlayerBullet.h"
+#include "EnemyBullet.h"
 
 namespace ss
 {
@@ -18,6 +19,8 @@ namespace ss
 	void Player::Start()
 	{
 		SetScale(sf::Vector2f(2, 2));
+
+		SetPosition(sf::Vector2f(GameWindow::Width() / 2.0f - Size().x / 2, GameWindow::Height() / 1.5f));
 	}
 
 	void Player::Update(float deltaTime)
@@ -29,15 +32,30 @@ namespace ss
 		{
 			if (timeSinceLastFire > fireDelay)
 			{
-				timeSinceLastFire = 0;
+ 				timeSinceLastFire = 0;
 
 				sf::Vector2f bulletPos = Position();
 				bulletPos.x += Size().x / 2;
-				SceneManager::CurrentScene()->GameObjects.push_back(new PlayerBullet(bulletPos, 90, 500));
+				SceneManager::CurrentScene()->SpawnGameObject(new PlayerBullet(bulletPos, 90, 500));
 			}
 		}
 
 		anim.Update(deltaTime);
+	}
+
+	void Player::OnCollision(Collidable& other)
+	{
+		EnemyBullet* object = dynamic_cast<EnemyBullet*> (&other);
+		if (object != nullptr)
+		{
+			sf::Vector2f shipCenter = Position();
+			shipCenter.y += Size().y / 2;
+			shipCenter.x += Size().x / 2;
+
+			SceneManager::CurrentScene()->SpawnParticle(new Explosion, shipCenter);
+			SceneManager::CurrentScene()->DestroyObject(object);
+			SceneManager::CurrentScene()->DestroyObject(this);
+		}
 	}
 
 	void Player::Move(float deltaTime)

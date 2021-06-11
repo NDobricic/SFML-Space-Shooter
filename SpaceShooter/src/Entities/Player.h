@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AnimatedSprite.h"
+#include "../Utilities/AnimatedSprite.h"
 #include "Collidable.h"
 
 namespace ss
@@ -22,6 +22,7 @@ namespace ss
 		Player();
 		void Start() override;
 		void Update(float deltaTime) override;
+		void OnCollision(Collidable& other) override;
 		const sf::Sprite& GetSprite() override;
 	};
 }

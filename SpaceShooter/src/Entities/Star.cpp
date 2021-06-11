@@ -1,5 +1,5 @@
 #include "Star.h"
-#include "GameWindow.h"
+#include "../GameWindow.h"
 #include <cmath>
 #include <random>
 

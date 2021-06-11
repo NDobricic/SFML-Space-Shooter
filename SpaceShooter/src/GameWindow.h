@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "AnimatedSprite.h"
 
 namespace ss
 {
@@ -15,7 +14,7 @@ namespace ss
 		void RunGameLoop();
 
 	public:
-		GameWindow(int width, int height, const std::string& title = "New SFML Window");
+		GameWindow(int width, int height, const std::string& title = "Space Shooter");
 		static int Width();
 		static int Height();
 		

@@ -23,6 +23,8 @@ namespace ss
 
 		AnimationLoopMode loopMode = AnimationLoopMode::Loop;
 
+		bool finished = false;
+
 	public:
 		AnimatedSprite(const std::string& spriteSheetPath, int width, int height, int numFrames, int offsetX = 0, int offsetY = 0);
 		AnimatedSprite(sf::Texture spriteSheetTexture, int width, int height, int numFrames, int offsetX = 0, int offsetY = 0);
@@ -30,5 +32,7 @@ namespace ss
 		void SetSpeed(float speed);
 		void SetLoopMode(const AnimationLoopMode& mode);
 		void Update(float deltaTime);
+
+		bool IsFinished();
 	};
 }

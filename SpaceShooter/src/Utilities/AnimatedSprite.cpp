@@ -9,12 +9,16 @@ namespace ss
 		tex->loadFromFile(spriteSheetPath);
 
 		setTexture(*tex);
+
+		setTextureRect(sf::IntRect(offX, offY, w, h));
 	}
 
 	AnimatedSprite::AnimatedSprite(sf::Texture spriteSheetTexture, int width, int height, int numFrames, int offsetX, int offsetY)
 		: w(width), h(height), numFrames(numFrames), offX(offsetX), offY(offsetY)
 	{
 		setTexture(spriteSheetTexture);
+
+		setTextureRect(sf::IntRect(offX, offY, w, h));
 	}
 
 	void AnimatedSprite::SetSpeed(float value)
@@ -40,6 +44,7 @@ namespace ss
 				break;
 			case ss::AnimationLoopMode::NoLoop:
 				time = numFrames * 0.999f;
+				finished = true;
 				break;
 			case ss::AnimationLoopMode::Reverse:
 				speed = -speed;
@@ -59,5 +64,10 @@ namespace ss
 		int top = offY;
 
 		setTextureRect(sf::IntRect(left, top, w, h));
+	}
+
+	bool AnimatedSprite::IsFinished()
+	{
+		return finished;
 	}
 }

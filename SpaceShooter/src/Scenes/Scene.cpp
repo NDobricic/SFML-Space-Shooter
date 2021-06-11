@@ -26,24 +26,29 @@ namespace ss
 			}
 	}
 
-	void Scene::Start()
-	{
-		for (int i = 0; i < Particles.size(); i++)
-			Particles[i]->Start();
-
-		for (int i = 0; i < GameObjects.size(); i++)
-			GameObjects[i]->Start();
-	}
-
 	void Scene::SpawnParticle(Entity* object)
 	{
 		Particles.push_back(object);
 		object->Start();
 	}
 
+	void Scene::SpawnParticle(Entity* object, const sf::Vector2f& position)
+	{
+		Particles.push_back(object);
+		object->SetPosition(position);
+		object->Start();
+	}
+
 	void Scene::SpawnGameObject(Collidable* object)
 	{
 		GameObjects.push_back(object);
+		object->Start();
+	}
+
+	void Scene::SpawnGameObject(Collidable* object, const sf::Vector2f& position)
+	{
+		GameObjects.push_back(object);
+		object->SetPosition(position);
 		object->Start();
 	}
 
