@@ -12,9 +12,9 @@ namespace ss
 
 		virtual void Fire(const sf::Vector2f& shipPosition) override
 		{
-			SceneManager::CurrentScene()->SpawnGameObject(new EnemyBullet(shipPosition, -90, 300));
-			SceneManager::CurrentScene()->SpawnGameObject(new EnemyBullet(shipPosition, -110, 300));
-			SceneManager::CurrentScene()->SpawnGameObject(new EnemyBullet(shipPosition, -70, 300));
+			SceneManager::CurrentScene()->SpawnGameObject(new EnemyBullet(-90, 300), shipPosition);
+			SceneManager::CurrentScene()->SpawnGameObject(new EnemyBullet(-110, 300), shipPosition);
+			SceneManager::CurrentScene()->SpawnGameObject(new EnemyBullet(-70, 300), shipPosition);
 		}
 	};
 }

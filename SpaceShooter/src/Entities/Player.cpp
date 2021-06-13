@@ -36,7 +36,7 @@ namespace ss
 
 				sf::Vector2f bulletPos = Position();
 				bulletPos.x += Size().x / 2;
-				SceneManager::CurrentScene()->SpawnGameObject(new PlayerBullet(bulletPos, 90, 500));
+				SceneManager::CurrentScene()->SpawnGameObject(new PlayerBullet(90, 500), bulletPos);
 			}
 		}
 

@@ -21,6 +21,7 @@ namespace ss
 		Enemy(const sf::Vector2f& position, MovePattern* pattern, Weapon* weapon);
 		virtual void Start() override;
 		virtual void Update(float deltaTime) override;
+		void OnCollision(Collidable& other) override;
 		~Enemy();
 	};
 }

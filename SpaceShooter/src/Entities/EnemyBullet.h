@@ -7,8 +7,8 @@ namespace ss
 	class EnemyBullet : public Bullet
 	{
 	public:
-		EnemyBullet(const sf::Vector2f& position, float rotation, float travelSpeed)
-			: Bullet(position, rotation, travelSpeed)
+		EnemyBullet(float rotation, float travelSpeed)
+			: Bullet(rotation, travelSpeed)
 		{
 			sprite = new sf::Sprite();
 

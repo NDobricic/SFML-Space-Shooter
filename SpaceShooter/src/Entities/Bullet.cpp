@@ -6,9 +6,8 @@
 
 namespace ss
 {
-	Bullet::Bullet(const sf::Vector2f& position, float rotation, float travelSpeed)
+	Bullet::Bullet(float rotation, float travelSpeed)
 	{
-		pos = position;
 		speed = travelSpeed;
 		rot = rotation;
 
@@ -18,7 +17,7 @@ namespace ss
 
 	void Bullet::Start()
 	{
-		SetPosition(pos);
+		
 	}
 
 	void Bullet::Update(float deltaTime)

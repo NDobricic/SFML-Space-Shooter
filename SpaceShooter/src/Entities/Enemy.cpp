@@ -3,6 +3,8 @@
 #include "Enemy.h"
 #include "../GameWindow.h"
 #include "../Scenes/SceneManager.h"
+#include "Explosion.h"
+#include "PlayerBullet.h"
 
 namespace ss
 {
@@ -34,6 +36,21 @@ namespace ss
 
 		if (Position().y > GameWindow::Height())
 			SceneManager::CurrentScene()->DestroyObject(this);
+	}
+
+	void Enemy::OnCollision(Collidable& other)
+	{
+		PlayerBullet* object = dynamic_cast<PlayerBullet*> (&other);
+		if (object != nullptr)
+		{
+			sf::Vector2f shipCenter = Position();
+			shipCenter.y += Size().y / 2;
+			shipCenter.x += Size().x / 2;
+
+			SceneManager::CurrentScene()->SpawnParticle(new Explosion, shipCenter);
+			SceneManager::CurrentScene()->DestroyObject(object);
+			SceneManager::CurrentScene()->DestroyObject(this);
+		}
 	}
 
 	Enemy::~Enemy()
