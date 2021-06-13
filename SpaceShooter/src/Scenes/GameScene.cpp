@@ -22,13 +22,4 @@ namespace ss
 		SpawnGameObject(new Enemy(sf::Vector2f(800, -200), new StraightMovePattern(50), new SingleFire(2.0f, 180)));
 		SpawnGameObject(new Enemy(sf::Vector2f(550, -300), new SinusoidalMovePattern(300, 4, 20), new SingleFire(0.4f, 180)));
 	}
-
-	void GameScene::Unload()
-	{
-		for (auto object : Particles)
-			delete object;
-
-		for (auto object : GameObjects)
-			delete object;
-	}
 }

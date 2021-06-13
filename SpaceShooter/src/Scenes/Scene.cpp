@@ -35,7 +35,11 @@ namespace ss
 	void Scene::SpawnParticle(Entity* object, const sf::Vector2f& position)
 	{
 		Particles.push_back(object);
-		object->SetPosition(position);
+
+		float w = object->Size().x;
+		float h = object->Size().y;
+
+		object->SetPosition(sf::Vector2f(position.x - w / 2, position.y - h / 2));
 		object->Start();
 	}
 
@@ -48,15 +52,35 @@ namespace ss
 	void Scene::SpawnGameObject(Collidable* object, const sf::Vector2f& position)
 	{
 		GameObjects.push_back(object);
-		object->SetPosition(position);
+
+		float w = object->Size().x;
+		float h = object->Size().y;
+
+		object->SetPosition(sf::Vector2f(position.x - w / 2, position.y - h / 2));
 		object->Start();
 	}
 
 	void Scene::DestroyObject(Entity* object)
 	{
+		// TODO: Delay object destruction until the end of current frame to avoid references to destroyed objects
+
 		Particles.erase(std::remove(Particles.begin(), Particles.end(), object), Particles.end());
 		GameObjects.erase(std::remove(GameObjects.begin(), GameObjects.end(), object), GameObjects.end());
 
 		delete object;
+	}
+
+	void Scene::Load() { }
+
+	void Scene::Unload()
+	{
+		for (auto& object : Particles)
+			delete object;
+
+		for (auto& object : GameObjects)
+			delete object;
+
+		for (auto& object : UIElements)
+			delete object;
 	}
 }
