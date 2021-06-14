@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "UIElement.h"
 
 namespace ss
 {
@@ -11,13 +12,19 @@ namespace ss
 		sf::RenderTexture canvasTexture;
 		sf::Sprite sprite;
 
-		std::vector<sf::Drawable> elements;
-
 	public:
+		std::vector<UIElement*> elements;
+
 		Canvas(int width, int height);
 
 		void Render();
 
-		const sf::Sprite& GetSprite();
+		const sf::Sprite& GetSprite() const;
+
+		~Canvas()
+		{
+			for (auto& element : elements)
+				delete element;
+		}
 	};
 }

@@ -10,16 +10,21 @@ namespace ss
 	{
 	private:
 		sf::Text textObj;
+		sf::Font fontObj;
 
 		Alignment textAlignment = Alignment::TopLeft;
-		std::string value = "text";
+
+		float localXPos = 0, localYPos = 0;
 
 	public:
-		Text();
-		Text(const std::string& text);
+		Text::Text(const std::string& text = "", int fontSize = 30);
 
 		void SetTextAlignment(Alignment alignment);
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+		virtual void UpdateAlignment(sf::Vector2u windowSize) override;
+
+		void SetText(const std::string& text);
 	};
 }

@@ -13,6 +13,12 @@ namespace ss
 		float xPos = 0, yPos = 0;
 
 	public:
+		int X = 0, Y = 0;
+		bool Visible = true;
+
+
 		void SetWindowAlignment(Alignment alignment);
+
+		virtual void UpdateAlignment(sf::Vector2u windowSize) = 0;
 	};
 }

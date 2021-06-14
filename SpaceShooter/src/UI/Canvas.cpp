@@ -10,13 +10,20 @@ namespace ss
 
 	void Canvas::Render()
 	{
+		canvasTexture.clear(sf::Color::Transparent);
+
 		for (auto& element : elements)
 		{
-			canvasTexture.draw(element);
+			element->UpdateAlignment(canvasTexture.getSize());
+
+			if(element->Visible)
+				canvasTexture.draw(*element);
+
+			canvasTexture.display();
 		}
 	}
 
-	const sf::Sprite& Canvas::GetSprite()
+	const sf::Sprite& Canvas::GetSprite() const
 	{
 		return sprite;
 	}
