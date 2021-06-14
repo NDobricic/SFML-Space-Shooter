@@ -8,8 +8,8 @@
 
 namespace ss
 {
-	Enemy::Enemy(const sf::Vector2f& position, MovePattern* pattern, Weapon* weapon)
-		: originalPos(position), movePattern(pattern), weapon(weapon), anim("res/sprites/enemy_sheet.png", 32, 32, 8, 0, 32 * 4)
+	Enemy::Enemy(MovePattern* pattern, Weapon* weapon)
+		: movePattern(pattern), weapon(weapon), anim("res/sprites/enemy_sheet.png", 32, 32, 8, 0, 32 * 4)
 	{
 		sprite = &anim;
 
@@ -20,8 +20,6 @@ namespace ss
 	void Enemy::Start()
 	{
 		SetScale(sf::Vector2f(2, 2));
-
-		SetPosition(originalPos);
 	}
 
 	void Enemy::Update(float deltaTime)

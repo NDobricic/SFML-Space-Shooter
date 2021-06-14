@@ -20,6 +20,8 @@ namespace ss
 	{
 		SetScale(sf::Vector2f(2, 2));
 
+		hpText->SetText("HP: " + std::to_string(hp));
+
 		SetPosition(sf::Vector2f(GameWindow::Width() / 2.0f - Size().x / 2, GameWindow::Height() / 1.5f));
 	}
 
@@ -48,14 +50,27 @@ namespace ss
 		EnemyBullet* object = dynamic_cast<EnemyBullet*> (&other);
 		if (object != nullptr)
 		{
+			SceneManager::CurrentScene()->DestroyObject(object);
+			Damage(10);
+		}
+	}
+
+	void Player::Damage(int amount)
+	{
+		hp -= amount;
+		if (hp <= 0)
+		{
+			hp = 0;
+
 			sf::Vector2f shipCenter = Position();
 			shipCenter.y += Size().y / 2;
 			shipCenter.x += Size().x / 2;
 
 			SceneManager::CurrentScene()->SpawnParticle(new Explosion, shipCenter);
-			SceneManager::CurrentScene()->DestroyObject(object);
 			SceneManager::CurrentScene()->DestroyObject(this);
 		}
+
+		hpText->SetText("HP: " + std::to_string(hp));
 	}
 
 	void Player::Move(float deltaTime)

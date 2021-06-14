@@ -18,7 +18,7 @@ namespace ss
 		AnimatedSprite anim;
 
 	public:
-		Enemy(const sf::Vector2f& position, MovePattern* pattern, Weapon* weapon);
+		Enemy(MovePattern* pattern, Weapon* weapon);
 		virtual void Start() override;
 		virtual void Update(float deltaTime) override;
 		void OnCollision(Collidable& other) override;
