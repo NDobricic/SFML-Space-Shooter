@@ -3,6 +3,7 @@
 namespace ss
 {
 	Scene* SceneManager::currentScene = nullptr;
+	Scene* SceneManager::sceneToLoad = nullptr;
 
 	Scene* SceneManager::CurrentScene()
 	{

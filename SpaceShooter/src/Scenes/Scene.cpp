@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include <SFML/Graphics.hpp>
 #include <algorithm>
+#include "SceneManager.h"
 
 namespace ss
 {
@@ -24,6 +25,25 @@ namespace ss
 					GameObjects[j]->OnCollision(*GameObjects[i]);
 				}
 			}
+
+		UICanvas->Render();
+
+		UserUpdate();
+
+
+		for (auto& object : objectsToDelete)
+		{
+			Particles.erase(std::remove(Particles.begin(), Particles.end(), object), Particles.end());
+			GameObjects.erase(std::remove(GameObjects.begin(), GameObjects.end(), object), GameObjects.end());
+
+			delete object;
+		}
+
+		objectsToDelete.clear();
+
+
+		if (unloading)
+			SceneManager::FinishSceneChange();
 	}
 
 	void Scene::SpawnParticle(Entity* object)
@@ -62,17 +82,10 @@ namespace ss
 
 	void Scene::DestroyObject(Entity* object)
 	{
-		// TODO: Delay object destruction until the end of current frame to avoid references to destroyed objects
-
-		Particles.erase(std::remove(Particles.begin(), Particles.end(), object), Particles.end());
-		GameObjects.erase(std::remove(GameObjects.begin(), GameObjects.end(), object), GameObjects.end());
-
-		delete object;
+		objectsToDelete.push_back(object);
 	}
 
-	void Scene::Load() { }
-
-	void Scene::Unload()
+	Scene::~Scene()
 	{
 		for (auto& object : Particles)
 			delete object;
@@ -80,7 +93,15 @@ namespace ss
 		for (auto& object : GameObjects)
 			delete object;
 
-		for (auto& object : UIElements)
-			delete object;
+		delete UICanvas;
 	}
+
+	void Scene::Load() { }
+
+	void Scene::Unload()
+	{
+		unloading = true;
+	}
+
+	void Scene::UserUpdate() { }
 }

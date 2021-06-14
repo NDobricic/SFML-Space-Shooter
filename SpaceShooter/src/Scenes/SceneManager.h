@@ -8,11 +8,13 @@ namespace ss
 	{
 	private:
 		static Scene* currentScene;
+		static Scene* sceneToLoad;
+
 	public:
 		static Scene* CurrentScene();
 
 		template<typename T>
-		static void LoadScene()
+		static void ChangeScene()
 		{
 			T* objectToLoad = new T;
 			Scene* newScene = dynamic_cast<Scene*>(objectToLoad);
@@ -22,15 +24,23 @@ namespace ss
 				return;
 			}
 
+			sceneToLoad = newScene;
+
 			if (currentScene != nullptr)
 			{
 				currentScene->Unload();
-				delete currentScene;
 			}
+			else
+				FinishSceneChange();
+		}
 
-			newScene->Load();
+		static void FinishSceneChange()
+		{
+			delete currentScene;
 
-			currentScene = newScene;
+			sceneToLoad->Load();
+
+			currentScene = sceneToLoad;
 		}
 	};
 }

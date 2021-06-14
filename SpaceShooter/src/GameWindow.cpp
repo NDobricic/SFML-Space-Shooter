@@ -1,6 +1,8 @@
 #include "GameWindow.h"
 #include "Scenes/SceneManager.h"
 #include "Scenes/GameScene.h"
+#include "Scenes/MainMenuScene.h"
+#include "UI/UI.h"
 
 namespace ss
 {
@@ -9,7 +11,7 @@ namespace ss
 
     void GameWindow::RunGameLoop()
     {
-        SceneManager::LoadScene<GameScene>();
+        SceneManager::ChangeScene<MainMenuScene>();
 
         sf::Clock time;
         float lastTime = 0;
@@ -34,6 +36,8 @@ namespace ss
                 window->draw(SceneManager::CurrentScene()->Particles[i]->GetSprite());
             for (int i = 0; i < SceneManager::CurrentScene()->GameObjects.size(); i++)
                 window->draw(SceneManager::CurrentScene()->GameObjects[i]->GetSprite());
+
+            window->draw(SceneManager::CurrentScene()->UICanvas->GetSprite());
 
             window->setTitle(title +
                 "; FPS: " + std::to_string(1.0f / deltaTime) +
