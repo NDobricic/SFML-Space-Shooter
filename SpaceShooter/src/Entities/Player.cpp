@@ -7,8 +7,8 @@
 
 namespace ss
 {
-	Player::Player()
-		: anim("res/sprites/player_sheet.png", 32, 32, 8)
+	Player::Player(Text* hpText, Text* ammoText, Text* scoreText, Text* gameOverText)
+		: hpText(hpText), ammoText(ammoText), scoreText(scoreText), gameOverText(gameOverText), anim("res/sprites/player_sheet.png", 32, 32, 8)
 	{
 		sprite = &anim;
 
@@ -18,9 +18,13 @@ namespace ss
 
 	void Player::Start()
 	{
+		clock.restart();
+
 		SetScale(sf::Vector2f(2, 2));
 
 		hpText->SetText("HP: " + std::to_string(hp));
+		ammoText->SetText("AMMO: " + std::to_string(ammo));
+		scoreText->SetText("SCORE: " + std::to_string(score));
 
 		SetPosition(sf::Vector2f(GameWindow::Width() / 2.0f - Size().x / 2, GameWindow::Height() / 1.5f));
 	}
@@ -29,16 +33,32 @@ namespace ss
 	{
 		Move(deltaTime);
 
+		if (clock.getElapsedTime().asMilliseconds() > 1000)
+		{
+			ammo++;
+			if (ammo > 20) ammo = 20;
+
+			ammoText->SetText("AMMO: " + std::to_string(ammo));
+
+			score++;
+			scoreText->SetText("SCORE: " + std::to_string(score));
+
+			clock.restart();
+		}
+
 		timeSinceLastFire += deltaTime;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			if (timeSinceLastFire > fireDelay)
+			if (timeSinceLastFire > fireDelay && ammo > 0)
 			{
  				timeSinceLastFire = 0;
 
 				sf::Vector2f bulletPos = Position();
 				bulletPos.x += Size().x / 2;
 				SceneManager::CurrentScene()->SpawnGameObject(new PlayerBullet(90, 500), bulletPos);
+
+				ammo--;
+				ammoText->SetText("AMMO: " + std::to_string(ammo));
 			}
 		}
 
@@ -65,6 +85,8 @@ namespace ss
 			sf::Vector2f shipCenter = Position();
 			shipCenter.y += Size().y / 2;
 			shipCenter.x += Size().x / 2;
+
+			gameOverText->Visible = true;
 
 			SceneManager::CurrentScene()->SpawnParticle(new Explosion, shipCenter);
 			SceneManager::CurrentScene()->DestroyObject(this);

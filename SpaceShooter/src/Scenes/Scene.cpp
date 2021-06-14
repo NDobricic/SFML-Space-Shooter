@@ -30,7 +30,6 @@ namespace ss
 
 		UserUpdate();
 
-
 		for (auto& object : objectsToDelete)
 		{
 			Particles.erase(std::remove(Particles.begin(), Particles.end(), object), Particles.end());
@@ -82,7 +81,8 @@ namespace ss
 
 	void Scene::DestroyObject(Entity* object)
 	{
-		objectsToDelete.push_back(object);
+		if(std::find(objectsToDelete.begin(), objectsToDelete.end(), object) == objectsToDelete.end())
+			objectsToDelete.push_back(object);
 	}
 
 	Scene::~Scene()
