@@ -20,6 +20,7 @@ namespace ss
 		Text::Text(const std::string& text = "", int fontSize = 30);
 
 		void SetTextAlignment(Alignment alignment);
+		void SetFontSize(int size);
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

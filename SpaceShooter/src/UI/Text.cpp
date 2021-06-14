@@ -27,6 +27,11 @@ namespace ss
 			localYPos = 0.5;
 	}
 
+	void Text::SetFontSize(int size)
+	{
+		textObj.setCharacterSize(size);
+	}
+
 	void Text::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		target.draw(textObj, states);
